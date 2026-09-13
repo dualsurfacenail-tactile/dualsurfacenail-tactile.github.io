@@ -20,17 +20,14 @@ SRC = Path.home() / "Downloads/nail videos"
 WIPES = Path.home() / "Downloads/IMG_8344 2 (1).mov"
 WIPES_PIX = [[900, 670, 272, 256]]
 COLOR = "colorspace=all=bt709:iall=bt2020:itrc=bt2020-10:format=yuv420p,eq=contrast=1.08:saturation=1.12"
-# name: (source, max output width, default pixelate boxes)
+# name: (source, max output width, default pixelate boxes). Card/binder/wipes task cards reuse the hero files.
 ITEMS = {
     "hero_card":         (SRC / "card_flip_success.MOV", 1920, []),
     "hero_binder":       (SRC / "folder_success.MOV",    1920, []),
     "hero_wipes":        (WIPES,                          1920, WIPES_PIX),
     "tissue_success":    (SRC / "tissue_success.MOV",    1280, []),
-    "wipes_success":     (WIPES,                          1280, WIPES_PIX),
-    "binder_success":    (SRC / "folder_success.MOV",    1280, []),
     "paper_success":     (SRC / "paper_success.MOV",     1280, []),
     "bento_success":     (SRC / "lid_success.MOV",       1280, []),
-    "card_flip_success": (SRC / "card_flip_success.MOV", 1280, []),
 }
 LOCK = threading.Lock()
 
@@ -212,7 +209,7 @@ kbd{background:#333;border-radius:3px;padding:0 5px;font-family:inherit}
   </div>
   <div class="row">
     <button class="pri" id="rbtn" onclick="render(name)">Render this</button>
-    <button id="rall" onclick="renderAll()">Render all 9</button>
+    <button id="rall" onclick="renderAll()">Render all</button>
     <span class="hint">drag = new box · drag inside = move · corner = resize · <kbd>space</kbd> play · <kbd>I</kbd>/<kbd>O</kbd> in/out · <kbd>←</kbd>/<kbd>→</kbd> frame (<kbd>shift</kbd> = 1 s) · <kbd>⌫</kbd> delete box</span>
   </div>
   <pre id="log">Pick a video on the left. Settings auto-save to tools/trims.json.</pre>
