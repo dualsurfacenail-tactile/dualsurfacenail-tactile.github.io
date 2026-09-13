@@ -99,8 +99,7 @@
   .tasks{grid-template-columns:repeat(2,1fr)}
   .vcard{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#000}
   .vcard video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
-  .vcard .t{position:absolute;left:14px;bottom:14px;padding:7px 14px;border-radius:999px;background:rgba(15,15,15,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);color:#fff;font-weight:600;font-size:.92rem;line-height:1.3;letter-spacing:.01em;pointer-events:none}
-  .vcard video[controls]+.t{top:14px;bottom:auto}
+  .vcard .t{position:absolute;left:14px;top:14px;padding:7px 14px;border-radius:999px;background:rgba(15,15,15,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);color:#fff;font-weight:600;font-size:.92rem;line-height:1.3;letter-spacing:.01em;pointer-events:none}
   .tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:600;background:var(--accent-soft);color:var(--accent);margin-left:8px;vertical-align:middle}
   .tag.red{background:#fbe7e7;color:var(--bad)}
 
@@ -257,12 +256,12 @@
     <h2>Policy Rollouts</h2>
     <p class="sub">Behavior-cloned policies with fingernail tactile input. <span class="tag">Autonomous · 1×</span></p>
     <div class="grid tasks">
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/tissue_success.jpg"><source src="static/videos/tissue_success.mp4" type="video/mp4"></video><div class="t">Tissue Lid Opening</div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/hero_wipes.jpg"><source src="static/videos/hero_wipes.mp4" type="video/mp4"></video><div class="t">Wipes Lid Opening &amp; Pulling</div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/hero_binder.jpg"><source src="static/videos/hero_binder.mp4" type="video/mp4"></video><div class="t">Binder Picking</div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/paper_success.jpg"><source src="static/videos/paper_success.mp4" type="video/mp4"></video><div class="t">Paper Picking</div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/bento_success.jpg"><source src="static/videos/bento_success.mp4" type="video/mp4"></video><div class="t">Bento Lid Opening</div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/hero_card.jpg"><source src="static/videos/hero_card.mp4" type="video/mp4"></video><div class="t">Card Flipping</div></div>
+      <div class="vcard"><video autoplay controls muted loop playsinline preload="metadata" poster="static/videos/posters/tissue_success.jpg"><source src="static/videos/tissue_success.mp4" type="video/mp4"></video><div class="t">Tissue Lid Opening</div></div>
+      <div class="vcard"><video autoplay controls muted loop playsinline preload="metadata" poster="static/videos/posters/hero_wipes.jpg"><source src="static/videos/hero_wipes.mp4" type="video/mp4"></video><div class="t">Wipes Lid Opening &amp; Pulling</div></div>
+      <div class="vcard"><video autoplay controls muted loop playsinline preload="metadata" poster="static/videos/posters/hero_binder.jpg"><source src="static/videos/hero_binder.mp4" type="video/mp4"></video><div class="t">Binder Picking</div></div>
+      <div class="vcard"><video autoplay controls muted loop playsinline preload="metadata" poster="static/videos/posters/paper_success.jpg"><source src="static/videos/paper_success.mp4" type="video/mp4"></video><div class="t">Paper Picking</div></div>
+      <div class="vcard"><video autoplay controls muted loop playsinline preload="metadata" poster="static/videos/posters/bento_success.jpg"><source src="static/videos/bento_success.mp4" type="video/mp4"></video><div class="t">Bento Lid Opening</div></div>
+      <div class="vcard"><video autoplay controls muted loop playsinline preload="metadata" poster="static/videos/posters/hero_card.jpg"><source src="static/videos/hero_card.mp4" type="video/mp4"></video><div class="t">Card Flipping</div></div>
     </div>
   </div>
 </section>
@@ -285,8 +284,8 @@
     <h2>Failure Modes</h2>
     <p class="sub">Policies trained without tactile input (vision + proprioception only). <span class="tag">Autonomous · 1×</span></p>
     <div class="grid g2">
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/tissue_failure_no_tactile.jpg"><source src="static/videos/tissue_failure_no_tactile.mp4" type="video/mp4"></video><div class="t">Tissue Lid Opening</div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/bento_failure_no_tactile.jpg"><source src="static/videos/bento_failure_no_tactile.mp4" type="video/mp4"></video><div class="t">Bento Lid Opening</div></div>
+      <div class="vcard"><video autoplay controls muted loop playsinline preload="metadata" poster="static/videos/posters/tissue_failure_no_tactile.jpg"><source src="static/videos/tissue_failure_no_tactile.mp4" type="video/mp4"></video><div class="t">Tissue Lid Opening</div></div>
+      <div class="vcard"><video autoplay controls muted loop playsinline preload="metadata" poster="static/videos/posters/bento_failure_no_tactile.jpg"><source src="static/videos/bento_failure_no_tactile.mp4" type="video/mp4"></video><div class="t">Bento Lid Opening</div></div>
     </div>
   </div>
 </section>
