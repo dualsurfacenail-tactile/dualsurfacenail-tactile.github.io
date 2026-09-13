@@ -2,6 +2,7 @@
 """Trim / crop / pixelate the site videos in a browser.
 
     python3 tools/trim.py                       # opens http://localhost:8765
+    python3 tools/trim.py hero_binder hero_wipes   # only list these clips
     python3 tools/trim.py --render all|<name>   # re-render from tools/trims.json (no UI)
 
 Settings live in tools/trims.json: {"name": {"in": s, "out": s, "crop": [x,y,w,h], "pix": [[x,y,w,h], ...]}}
@@ -304,6 +305,8 @@ if __name__ == "__main__":
         for n in (ITEMS if sys.argv[2] == "all" else [sys.argv[2]]):
             render(n)
         sys.exit()
+    if sys.argv[1:]:  # only list the named clips
+        ITEMS = {n: ITEMS[n] for n in sys.argv[1:]}
     srv = ThreadingHTTPServer(("127.0.0.1", 8765), H)
     print("http://localhost:8765  (ctrl-c to stop)")
     webbrowser.open("http://localhost:8765")
