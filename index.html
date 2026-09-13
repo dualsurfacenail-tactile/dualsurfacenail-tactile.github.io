@@ -6,7 +6,7 @@
 <title>A Dual-Surface Tactile Fingertip for Contact-Rich Dexterous Manipulation</title>
 <meta name="description" content="A sensorized fingernail + uSkin fingerpad for contact-rich dexterous manipulation with a multi-fingered hand.">
 <meta property="og:title" content="A Dual-Surface Tactile Fingertip for Contact-Rich Dexterous Manipulation of a Multi-Fingered Hand">
-<meta property="og:image" content="static/videos/posters/hero.jpg">
+<meta property="og:image" content="static/videos/posters/hero_card.jpg">
 <style>
   @font-face{font-family:Aptos;src:local("Aptos"),url(static/fonts/Aptos.ttf) format("truetype");font-weight:400;font-style:normal;font-display:swap}
   @font-face{font-family:Aptos;src:local("Aptos Italic"),url(static/fonts/Aptos-Italic.ttf) format("truetype");font-weight:400;font-style:italic;font-display:swap}
@@ -35,26 +35,21 @@
   .caption b{color:var(--ink)}
 
   /* ===== hero ===== */
-  .hero{position:relative;height:100vh;min-height:600px;overflow:hidden;background:#000;display:grid;place-items:center;text-align:center;color:#fff}
+  .hero{position:relative;height:100vh;min-height:600px;overflow:hidden;background:#000;color:#fff}
   .hero .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}
   .hero .slide.active{opacity:1}
-  .hero .content{z-index:2}
   .nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);background:rgba(255,255,255,.1);backdrop-filter:blur(8px);color:#fff;display:grid;place-items:center;cursor:pointer;padding:0;transition:background .15s,border-color .15s}
   .nav svg{width:26px;height:26px}
   .nav:hover{background:rgba(255,255,255,.28);border-color:#fff}
   .nav.prev{left:28px}
   .nav.next{right:28px}
-  .dots{position:absolute;bottom:78px;left:50%;transform:translateX(-50%);display:flex;gap:9px;z-index:3}
+  .dots{position:absolute;bottom:76px;right:64px;display:flex;gap:9px;z-index:3;align-items:center}
   .dots button{width:9px;height:9px;border-radius:999px;border:0;padding:0;background:rgba(255,255,255,.45);cursor:pointer;transition:width .25s,background .25s}
   .dots button.active{background:#fff;width:26px}
-  .hero .overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 60%,rgba(0,0,0,.45) 100%)}
-  .hero .content{position:relative;max-width:1000px;padding:0 24px}
-  .hero h1{font-size:clamp(1.9rem,4.2vw,3.3rem);line-height:1.12;font-weight:800;letter-spacing:-.02em;margin:0 0 20px;text-shadow:0 2px 24px rgba(0,0,0,.45)}
-  .hero .authors{font-size:clamp(1rem,1.6vw,1.25rem);color:rgba(255,255,255,.88);margin:0 0 30px;text-shadow:0 1px 12px rgba(0,0,0,.5)}
-  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:999px;border:1.5px solid rgba(255,255,255,.7);color:#fff;font-weight:600;font-size:1rem;backdrop-filter:blur(6px);background:rgba(255,255,255,.08);transition:background .15s,transform .15s}
-  .btn:hover{background:rgba(255,255,255,.2);transform:translateY(-1px)}
-  .btn svg{width:17px;height:17px}
+  .hero .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.78) 0%,rgba(0,0,0,.35) 40%,rgba(0,0,0,.22) 100%)}
+  .hero .content{position:absolute;z-index:2;left:64px;bottom:64px;max-width:min(900px,calc(100% - 320px));text-align:left}
+  .hero h1{font-size:clamp(1.9rem,4.2vw,3.3rem);line-height:1.12;font-weight:800;letter-spacing:-.02em;margin:0 0 14px;text-shadow:0 2px 24px rgba(0,0,0,.45)}
+  .hero .authors{font-size:clamp(1rem,1.6vw,1.25rem);color:rgba(255,255,255,.88);margin:0;text-shadow:0 1px 12px rgba(0,0,0,.5)}
   .scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);color:#fff;font-size:1.6rem;opacity:.8;animation:bob 1.8s ease-in-out infinite}
   @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
 
@@ -121,6 +116,8 @@
     .nav{width:42px;height:42px}
     .nav.prev{left:10px}
     .nav.next{right:10px}
+    .hero .content{left:20px;right:20px;bottom:96px;max-width:none}
+    .dots{right:20px;bottom:64px}
     .tasks,.g2{grid-template-columns:1fr}
     section{padding:44px 0}
   }
