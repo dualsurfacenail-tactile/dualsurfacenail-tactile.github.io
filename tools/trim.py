@@ -29,7 +29,10 @@ ITEMS = {
     "tissue_success":    (SRC / "tissue_success.MOV",    1280, []),
     "paper_success":     (SRC / "paper_success.MOV",     1280, []),
     "bento_success":     (SRC / "lid_success.MOV",       1280, []),
+    "binder_continuous": (SRC / "folder_continuous.mov", 1280, []),
+    "paper_continuous":  (SRC / "paper_continuous.MOV",  1280, []),
 }
+SPEED = {"binder_continuous": 3, "paper_continuous": 3}  # playback speed-up applied at render
 LOCK = threading.Lock()
 
 
@@ -55,7 +58,7 @@ def even(v):
     return int(round(v)) // 2 * 2
 
 
-def filters(pix, crop, max_w):
+def filters(pix, crop, max_w, speed=1):
     """COLOR -> pixelate boxes -> crop -> scale, as a filter_complex graph ending in [v]."""
     parts, cur = [f"[0:v]{COLOR}[c]"], "[c]"
     for i, (x, y, w, h) in enumerate(pix):
@@ -69,6 +72,8 @@ def filters(pix, crop, max_w):
         x, y, w, h = map(even, crop)
         tail.append(f"crop={w}:{h}:{x}:{y}")
     tail.append(f"scale={min(max_w, even(crop[2]) if crop else max_w)}:-2")
+    if speed != 1:
+        tail.append(f"setpts=PTS/{speed},fps=30")
     parts.append(f"{cur}{','.join(tail)}[v]")
     return ";".join(parts)
 
@@ -90,7 +95,7 @@ def render(name, log=print):
     (OUT / "posters").mkdir(parents=True, exist_ok=True)
     mp4 = OUT / f"{name}.mp4"
     run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{t0:.3f}", "-t", f"{t1 - t0:.3f}", "-i", str(src),
-         "-filter_complex", filters(s["pix"], s["crop"], max_w), "-map", "[v]", "-an",
+         "-filter_complex", filters(s["pix"], s["crop"], max_w, SPEED.get(name, 1)), "-map", "[v]", "-an",
          "-c:v", "libx264", "-preset", "medium", "-crf", "23", "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(mp4)], log)
     run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(mp4), "-frames:v", "1", "-q:v", "3",
          str(OUT / "posters" / f"{name}.jpg")], log)
@@ -126,7 +131,7 @@ class H(BaseHTTPRequestHandler):
         if p == "/":
             return self.reply(PAGE.encode(), "text/html")
         if p == "/config":
-            return self.reply({n: {"src": s.name, "max_w": w, **probe(s), "settings": settings(n)}
+            return self.reply({n: {"src": s.name, "max_w": w, "speed": SPEED.get(n, 1), **probe(s), "settings": settings(n)}
                                for n, (s, w, _) in ITEMS.items()})
         if p.startswith("/proxy/"):
             return self.reply(proxy(ITEMS[p[7:]][0]).read_bytes(), "video/mp4")
@@ -222,9 +227,9 @@ let cfg, clip, S, W, H, DUR, mode='crop', sel=-1, drag=null, saveT;
 
 fetch('/config').then(r=>r.json()).then(c=>{cfg=c;
   const names=Object.keys(c), hero=names.filter(n=>n.startsWith('hero_')), tasks=names.filter(n=>!n.startsWith('hero_'));
-  $('list').innerHTML=`<h3>Hero (1080p)</h3>${hero.map(btn).join('')}<h3>Policy rollouts (720p)</h3>${tasks.map(btn).join('')}`;
+  $('list').innerHTML=`<h3>Hero (1080p)</h3>${hero.map(btn).join('')}<h3>Task clips (720p)</h3>${tasks.map(btn).join('')}`;
   pick(names[0]);});
-const btn=n=>`<button id="b_${n}" onclick="pick('${n}')">${n}<small>${cfg[n].src} · ${cfg[n].dur.toFixed(1)} s</small></button>`;
+const btn=n=>`<button id="b_${n}" onclick="pick('${n}')">${n}<small>${cfg[n].src} · ${cfg[n].dur.toFixed(1)} s${cfg[n].speed>1?` · rendered at ${cfg[n].speed}×`:""}</small></button>`;
 
 function pick(n){ clip=n; const it=cfg[n]; W=it.w; H=it.h; DUR=it.dur; S=it.settings; if(S.out==null) S.out=+DUR.toFixed(2);
   stage.style.aspectRatio=W+'/'+H; document.querySelectorAll('aside button').forEach(b=>b.classList.toggle('on',b.id==='b_'+n));
