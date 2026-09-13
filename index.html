@@ -304,7 +304,7 @@
     slides[cur].classList.add("active"); dots[cur].classList.add("active");
     slides[cur].currentTime=0; slides[cur].play().catch(()=>{});
   }
-  slides.forEach(v=>{v.playbackRate=1.5;v.addEventListener("ended",()=>show(cur+1));});
+  slides.forEach(v=>{v.playbackRate=1.2;v.addEventListener("ended",()=>show(cur+1));});
   document.querySelector(".nav.prev").addEventListener("click",()=>show(cur-1));
   document.querySelector(".nav.next").addEventListener("click",()=>show(cur+1));
   dots.forEach((d,k)=>d.addEventListener("click",()=>show(k)));
