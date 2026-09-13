@@ -36,7 +36,17 @@
 
   /* ===== hero ===== */
   .hero{position:relative;height:100vh;min-height:600px;overflow:hidden;background:#000;display:grid;place-items:center;text-align:center;color:#fff}
-  .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .hero .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s ease}
+  .hero .slide.active{opacity:1}
+  .hero .content{z-index:2}
+  .nav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55);background:rgba(255,255,255,.1);backdrop-filter:blur(8px);color:#fff;display:grid;place-items:center;cursor:pointer;padding:0;transition:background .15s,border-color .15s}
+  .nav svg{width:26px;height:26px}
+  .nav:hover{background:rgba(255,255,255,.28);border-color:#fff}
+  .nav.prev{left:28px}
+  .nav.next{right:28px}
+  .dots{position:absolute;bottom:78px;left:50%;transform:translateX(-50%);display:flex;gap:9px;z-index:3}
+  .dots button{width:9px;height:9px;border-radius:999px;border:0;padding:0;background:rgba(255,255,255,.45);cursor:pointer;transition:width .25s,background .25s}
+  .dots button.active{background:#fff;width:26px}
   .hero .overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.55) 0%,rgba(0,0,0,.35) 60%,rgba(0,0,0,.45) 100%)}
   .hero .content{position:relative;max-width:1000px;padding:0 24px}
   .hero h1{font-size:clamp(1.9rem,4.2vw,3.3rem);line-height:1.12;font-weight:800;letter-spacing:-.02em;margin:0 0 20px;text-shadow:0 2px 24px rgba(0,0,0,.45)}
@@ -91,10 +101,7 @@
   /* ===== videos ===== */
   .grid{display:grid;gap:20px}
   .g2{grid-template-columns:repeat(2,1fr)}
-  .tasks{grid-template-columns:repeat(6,1fr)}
-  .tasks .vcard{grid-column:span 2}
-  .tasks .vcard:nth-child(4){grid-column:2/span 2}
-  .tasks .vcard:nth-child(5){grid-column:4/span 2}
+  .tasks{grid-template-columns:repeat(2,1fr)}
   .vcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
   .vcard video{width:100%;aspect-ratio:16/9;background:#000;object-fit:cover}
   .vcard .t{padding:12px 16px 14px;font-weight:600;font-size:1.02rem;text-align:center}
@@ -107,12 +114,13 @@
   @media (max-width:900px){
     .abstract .row{grid-template-columns:1fr}
     .abstract h2{text-align:center}
-    .tasks{grid-template-columns:1fr 1fr}
-    .tasks .vcard,.tasks .vcard:nth-child(4),.tasks .vcard:nth-child(5){grid-column:auto}
     table.spec td.k,table.spec td.v{display:block;width:auto;border:0;padding:6px 18px}
     table.spec td.k{padding-top:12px;padding-bottom:0}
   }
   @media (max-width:640px){
+    .nav{width:42px;height:42px}
+    .nav.prev{left:10px}
+    .nav.next{right:10px}
     .tasks,.g2{grid-template-columns:1fr}
     section{padding:44px 0}
   }
@@ -122,15 +130,20 @@
 
 <!-- ============ HERO ============ -->
 <header class="hero" id="top">
-  <video autoplay muted loop playsinline preload="auto" poster="static/videos/posters/hero.jpg"><source src="static/videos/hero.mp4" type="video/mp4"></video>
+  <video class="slide active" autoplay muted playsinline preload="auto" poster="static/videos/posters/hero_card.jpg"><source src="static/videos/hero_card.mp4" type="video/mp4"></video>
+  <video class="slide" muted playsinline preload="auto" poster="static/videos/posters/hero_binder.jpg"><source src="static/videos/hero_binder.mp4" type="video/mp4"></video>
+  <video class="slide" muted playsinline preload="auto" poster="static/videos/posters/hero_wipes.jpg"><source src="static/videos/hero_wipes.mp4" type="video/mp4"></video>
   <div class="overlay"></div>
+  <button class="nav prev" type="button" aria-label="Previous video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+  <button class="nav next" type="button" aria-label="Next video"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
   <div class="content">
     <h1>A Dual-Surface Tactile Fingertip for Contact-Rich Dexterous Manipulation of a Multi-Fingered Hand</h1>
-    <p class="authors">Anonymous Authors &nbsp;·&nbsp; ICRA 2027 (under review)</p>
-    <div class="btns">
-      <a class="btn" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>Paper</a>
-      <a class="btn" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Code</a>
-    </div>
+    <p class="authors" style="margin-bottom:0">Anonymous Authors &nbsp;·&nbsp; ICRA 2027 (under review)</p>
+  </div>
+  <div class="dots" aria-label="Choose video">
+    <button type="button" class="active" aria-label="Card flipping"></button>
+    <button type="button" aria-label="Binder picking"></button>
+    <button type="button" aria-label="Wipes lid opening"></button>
   </div>
   <a class="scroll" href="#abstract" aria-label="Scroll to content">&darr;</a>
 </header>
@@ -246,13 +259,14 @@
 <section class="soft" id="tasks">
   <div class="container wide">
     <h2>Policy Rollouts</h2>
-    <p class="sub">Behavior-cloned policies with fingernail tactile input on five contact-rich tasks. Real-time.</p>
+    <p class="sub">Behavior-cloned policies with fingernail tactile input. <span class="tag">Autonomous · 1×</span></p>
     <div class="grid tasks">
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/tissue_success.jpg"><source src="static/videos/tissue_success.mp4" type="video/mp4"></video><div class="t">Tissue Lid Opening <span>Autonomous · 1×</span></div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/binder_success.jpg"><source src="static/videos/binder_success.mp4" type="video/mp4"></video><div class="t">Binder Picking <span>Autonomous · 1×</span></div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/paper_success.jpg"><source src="static/videos/paper_success.mp4" type="video/mp4"></video><div class="t">Paper Picking <span>Autonomous · 1×</span></div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/bento_success.jpg"><source src="static/videos/bento_success.mp4" type="video/mp4"></video><div class="t">Bento Lid Opening <span>Autonomous · 1×</span></div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/card_flip_success.jpg"><source src="static/videos/card_flip_success.mp4" type="video/mp4"></video><div class="t">Card Flipping <span>Autonomous · 1×</span></div></div>
+      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/tissue_success.jpg"><source src="static/videos/tissue_success.mp4" type="video/mp4"></video><div class="t">Tissue Lid Opening</div></div>
+      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/wipes_success.jpg"><source src="static/videos/wipes_success.mp4" type="video/mp4"></video><div class="t">Wipes Lid Opening &amp; Pulling</div></div>
+      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/binder_success.jpg"><source src="static/videos/binder_success.mp4" type="video/mp4"></video><div class="t">Binder Picking</div></div>
+      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/paper_success.jpg"><source src="static/videos/paper_success.mp4" type="video/mp4"></video><div class="t">Paper Picking</div></div>
+      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/bento_success.jpg"><source src="static/videos/bento_success.mp4" type="video/mp4"></video><div class="t">Bento Lid Opening</div></div>
+      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/card_flip_success.jpg"><source src="static/videos/card_flip_success.mp4" type="video/mp4"></video><div class="t">Card Flipping</div></div>
     </div>
   </div>
 </section>
@@ -261,10 +275,10 @@
 <section id="continuous">
   <div class="container wide">
     <h2>Continuous Rollouts</h2>
-    <p class="sub">Uncut consecutive trials, played at 3× speed.</p>
+    <p class="sub">Uncut consecutive trials. <span class="tag">Autonomous · 3× speed</span></p>
     <div class="grid g2">
-      <div class="vcard"><video controls muted loop playsinline preload="none" poster="static/videos/posters/binder_continuous.jpg"><source src="static/videos/binder_continuous.mp4" type="video/mp4"></video><div class="t">Binder Picking <span>Autonomous · 3× speed</span></div></div>
-      <div class="vcard"><video controls muted loop playsinline preload="none" poster="static/videos/posters/paper_continuous.jpg"><source src="static/videos/paper_continuous.mp4" type="video/mp4"></video><div class="t">Paper Picking <span>Autonomous · 3× speed</span></div></div>
+      <div class="vcard"><video controls muted loop playsinline preload="none" poster="static/videos/posters/binder_continuous.jpg"><source src="static/videos/binder_continuous.mp4" type="video/mp4"></video><div class="t">Binder Picking</div></div>
+      <div class="vcard"><video controls muted loop playsinline preload="none" poster="static/videos/posters/paper_continuous.jpg"><source src="static/videos/paper_continuous.mp4" type="video/mp4"></video><div class="t">Paper Picking</div></div>
     </div>
   </div>
 </section>
@@ -273,10 +287,10 @@
 <section class="soft" id="failures">
   <div class="container wide">
     <h2>Failure Modes</h2>
-    <p class="sub">Policies trained without tactile input (vision + proprioception only).</p>
+    <p class="sub">Policies trained without tactile input (vision + proprioception only). <span class="tag">Autonomous · 1×</span></p>
     <div class="grid g2">
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/tissue_failure_no_tactile.jpg"><source src="static/videos/tissue_failure_no_tactile.mp4" type="video/mp4"></video><div class="t">Tissue Lid Opening <span>Without tactile · Autonomous · 1×</span></div></div>
-      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/bento_failure_no_tactile.jpg"><source src="static/videos/bento_failure_no_tactile.mp4" type="video/mp4"></video><div class="t">Bento Lid Opening <span>Without tactile · Autonomous · 1×</span></div></div>
+      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/tissue_failure_no_tactile.jpg"><source src="static/videos/tissue_failure_no_tactile.mp4" type="video/mp4"></video><div class="t">Tissue Lid Opening</div></div>
+      <div class="vcard"><video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/bento_failure_no_tactile.jpg"><source src="static/videos/bento_failure_no_tactile.mp4" type="video/mp4"></video><div class="t">Bento Lid Opening</div></div>
     </div>
   </div>
 </section>
@@ -285,5 +299,20 @@
   <div class="container">Anonymous ICRA 2027 submission · all videos are real-time policy rollouts.</div>
 </footer>
 
+<script>
+  const slides=[...document.querySelectorAll(".hero .slide")], dots=[...document.querySelectorAll(".dots button")];
+  let cur=0;
+  function show(n){
+    slides[cur].classList.remove("active"); dots[cur].classList.remove("active"); slides[cur].pause();
+    cur=(n+slides.length)%slides.length;
+    slides[cur].classList.add("active"); dots[cur].classList.add("active");
+    slides[cur].currentTime=0; slides[cur].play().catch(()=>{});
+  }
+  slides.forEach(v=>v.addEventListener("ended",()=>show(cur+1)));
+  document.querySelector(".nav.prev").addEventListener("click",()=>show(cur-1));
+  document.querySelector(".nav.next").addEventListener("click",()=>show(cur+1));
+  dots.forEach((d,k)=>d.addEventListener("click",()=>show(k)));
+  document.addEventListener("keydown",e=>{if(e.key==="ArrowRight")show(cur+1);if(e.key==="ArrowLeft")show(cur-1);});
+</script>
 </body>
 </html>
