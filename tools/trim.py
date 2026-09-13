@@ -276,7 +276,7 @@ stage.onpointermove=e=>{
   clampBox(b,drag.kind); draw();
 };
 stage.onpointerup=()=>{ if(!drag) return;
-  if(drag.box[2]<8||drag.box[3]<8){ if(drag.kind==='crop') S.crop=null; else {S.pix.splice(S.pix.indexOf(drag.box),1); sel=-1;} }
+  if(drag.box[2]<8||drag.box[3]<8||(drag.kind==="crop"&&drag.box[2]<240)){ if(drag.kind==='crop') S.crop=null; else {S.pix.splice(S.pix.indexOf(drag.box),1); sel=-1;} }
   drag=null; changed(); };
 
 v.onplay=()=>$('play').textContent='Pause'; v.onpause=()=>$('play').textContent='Play';
