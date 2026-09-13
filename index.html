@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Dual-Surface Tactile Fingertip for Contact-Rich Dexterous Manipulation</title>
+<meta name="description" content="A sensorized fingernail + uSkin fingerpad for contact-rich dexterous manipulation with a multi-fingered hand. Project page.">
+<meta property="og:title" content="A Dual-Surface Tactile Fingertip for Contact-Rich Dexterous Manipulation of a Multi-Fingered Hand">
+<meta property="og:image" content="static/images/teaser_nail.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff; --bg-soft:#f6f7f9; --ink:#111318; --ink-2:#4b5160; --ink-3:#8a90a0;
+    --line:#e6e8ee; --accent:#d9782f; --accent-soft:#fbeee2;
+    --ok:#1f8a70; --warn:#d98a00; --bad:#c43c3c;
+    --radius:14px; --shadow:0 1px 2px rgba(17,19,24,.05),0 8px 24px rgba(17,19,24,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  img,video{display:block;max-width:100%}
+  .container{max-width:1040px;margin:0 auto;padding:0 20px}
+  .wide{max-width:1320px}
+  section{padding:56px 0}
+  section.soft{background:var(--bg-soft)}
+  h1{font-size:clamp(1.7rem,3.6vw,2.6rem);line-height:1.15;font-weight:800;letter-spacing:-.02em;margin:0 0 16px}
+  h2{font-size:1.65rem;font-weight:700;letter-spacing:-.01em;margin:0 0 8px}
+  h3{font-size:1.15rem;font-weight:600;margin:32px 0 12px}
+  .sub{color:var(--ink-2);margin:0 0 28px;font-size:1.02rem}
+  .caption{color:var(--ink-2);font-size:.92rem;margin:12px 0 0;text-align:center}
+  .caption b{color:var(--ink)}
+
+  /* hero */
+  .hero{padding:72px 0 40px;text-align:center;background:linear-gradient(180deg,#fff 0%,var(--bg-soft) 100%)}
+  .authors{font-size:1.05rem;color:var(--ink-2);margin:0 0 6px}
+  .venue{color:var(--ink-3);font-size:.95rem;margin:0 0 26px}
+  .btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:var(--ink);color:#fff;font-weight:600;font-size:.95rem;transition:transform .12s ease,box-shadow .12s ease}
+  .btn:hover{text-decoration:none;transform:translateY(-1px);box-shadow:var(--shadow)}
+  .btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn svg{width:16px;height:16px}
+  .teaser{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:#fff}
+  .teaser img{width:100%}
+
+  /* abstract */
+  .abstract p{font-size:1.05rem;color:var(--ink-2);margin:0;text-align:justify}
+
+  /* design */
+  .design{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:start}
+  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+  .card .pad{padding:16px}
+  table.spec{width:100%;border-collapse:collapse;font-size:.95rem}
+  table.spec th{text-align:left;padding:12px 16px;background:var(--bg-soft);font-weight:600;font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+  table.spec td{padding:10px 16px;border-top:1px solid var(--line);vertical-align:top}
+  table.spec td:first-child{color:var(--ink-2);width:46%}
+  table.spec td:last-child{font-weight:600}
+  table.spec .hl td:last-child{color:var(--accent)}
+
+  /* comparison table */
+  .scroll{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--line);box-shadow:var(--shadow);background:#fff}
+  table.cmp{border-collapse:separate;border-spacing:0;width:100%;min-width:1080px;font-size:.85rem}
+  table.cmp th,table.cmp td{padding:10px 7px;text-align:center;border-bottom:1px solid var(--line);vertical-align:middle}
+  table.cmp thead th{background:var(--bg-soft);font-weight:600;color:var(--ink-2);font-size:.74rem;text-transform:uppercase;letter-spacing:.02em}
+  table.cmp thead tr.group th{font-size:.92rem;text-transform:none;letter-spacing:0;color:var(--ink);border-bottom:2px solid var(--line)}
+  table.cmp thead tr.group th.pad{background:#eef6f3}
+  table.cmp thead tr.group th.nail{background:var(--accent-soft)}
+  table.cmp td:first-child,table.cmp th:first-child{text-align:left;white-space:nowrap;font-weight:500}
+  table.cmp td.sep,table.cmp th.sep{border-left:1px solid var(--line)}
+  table.cmp tbody tr:hover{background:#fafbfc}
+  table.cmp tr.ours td{background:var(--accent-soft);font-weight:700}
+  table.cmp tr.ours td:first-child{color:var(--accent)}
+  table.cmp small{color:var(--ink-3);font-weight:400;display:block;font-size:.76rem;white-space:normal;max-width:120px;margin:0 auto}
+  table.cmp td:nth-child(3),table.cmp td:nth-child(4),table.cmp td:nth-child(8),table.cmp td:nth-child(9),table.cmp td:first-child{white-space:nowrap}
+  .ok{color:var(--ok);font-weight:700}
+  .warn{color:var(--warn);font-weight:700}
+  .bad{color:var(--bad);font-weight:700}
+  .na{color:var(--ink-3)}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;color:var(--ink-2);font-size:.88rem;margin-top:12px}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:8px 0 40px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px;box-shadow:var(--shadow)}
+  .stat .n{font-size:2rem;font-weight:800;letter-spacing:-.02em;color:var(--accent);line-height:1.1}
+  .stat .n span{color:var(--ink-3);font-weight:600;font-size:1.1rem}
+  .stat .l{color:var(--ink-2);font-size:.9rem;margin-top:6px}
+
+  /* videos */
+  .grid{display:grid;gap:18px}
+  .g5{grid-template-columns:repeat(5,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .vcard{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+  .vcard video{width:100%;aspect-ratio:16/9;background:#000;object-fit:cover}
+  .vcard .meta{padding:12px 14px 14px}
+  .vcard .t{font-weight:600;font-size:.98rem}
+  .vcard .d{color:var(--ink-2);font-size:.86rem;margin-top:2px}
+  .bars{margin-top:10px;display:grid;gap:5px;font-size:.78rem;color:var(--ink-2)}
+  .bar{display:grid;grid-template-columns:64px 1fr 34px;align-items:center;gap:8px}
+  .bar i{display:block;height:6px;border-radius:3px;background:var(--line);position:relative;overflow:hidden}
+  .bar i::after{content:"";position:absolute;inset:0;width:var(--w);border-radius:3px;background:var(--ink-3)}
+  .bar.nail i::after{background:var(--accent)}
+  .bar b{font-weight:600;color:var(--ink);text-align:right}
+  .tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:600;background:var(--accent-soft);color:var(--accent);margin-left:8px;vertical-align:middle}
+  .tag.gray{background:#eceef3;color:var(--ink-2)}
+  .tag.red{background:#fbe7e7;color:var(--bad)}
+
+  /* small result tables */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+  table.res{width:100%;border-collapse:collapse;font-size:.95rem;background:#fff}
+  table.res th,table.res td{padding:11px 14px;text-align:center;border-bottom:1px solid var(--line)}
+  table.res th{background:var(--bg-soft);font-weight:600;font-size:.82rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2)}
+  table.res td:first-child,table.res th:first-child{text-align:left;white-space:nowrap}
+  table.res small{display:block;font-size:.78rem;color:var(--ink-3);font-weight:500}
+  table.res tr.hl td{background:var(--accent-soft);font-weight:700}
+  table.res td.best{font-weight:700;color:var(--accent)}
+
+  footer{padding:36px 0;color:var(--ink-3);font-size:.85rem;text-align:center;border-top:1px solid var(--line)}
+
+  @media (max-width:980px){
+    .g5{grid-template-columns:repeat(3,1fr)}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .design,.two{grid-template-columns:1fr}
+  }
+  @media (max-width:640px){
+    .g5,.g2{grid-template-columns:1fr}
+    section{padding:40px 0}
+    .hero{padding:48px 0 28px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="container">
+    <h1>A Dual-Surface Tactile Fingertip for Contact-Rich Dexterous Manipulation of a Multi-Fingered Hand</h1>
+    <p class="authors">Anonymous Authors</p>
+    <p class="venue">Under review · ICRA 2027</p>
+    <div class="btns">
+      <a class="btn" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>Paper</a>
+      <a class="btn ghost" href="#results"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>Videos</a>
+      <a class="btn ghost" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Code</a>
+    </div>
+    <div class="teaser"><img src="static/images/teaser_nail.png" alt="Allegro Hand with dual-surface tactile fingertips flipping a card, picking a binder, and opening a lid"></div>
+    <p class="caption">We extend the uSkin fingerpad with a <b>sensorized rigid fingernail</b>, providing distributed tactile signals from both surfaces for clipping, pinching, and edge acquisition.</p>
+  </div>
+</header>
+
+<!-- ============ ABSTRACT ============ -->
+<section class="abstract">
+  <div class="container">
+    <h2>Abstract</h2>
+    <p>Dexterous manipulation requires complementary contact modes: a compliant surface for stable, distributed contact and a rigid surface for concentrating force at thin edges and within narrow gaps. Humans achieve these modes using the fingerpad and fingernail, yet most tactile robotic hands focus sensing on the fingerpad, leaving nail-mediated interactions needed to lift thin sheets, open lids, and flip cards largely unobserved. We introduce a dual-surface tactile fingertip that combines a densely sensorized compliant uSkin fingerpad with a rigid fingernail instrumented by three spatially distributed 3-axis magnetic taxels. Loading experiments show that the fingernail signals encode force magnitude, force direction, and contact location, with mean force and localization errors of 0.082&nbsp;N and 0.187&nbsp;mm. We evaluate the fingertip through behavior cloning on five contact-rich manipulation tasks using a UR5e arm and Allegro Hand. Adding fingernail tactile sensing increases average task success from 48% to 70% and improves robustness across object initializations. On the multi-stage card-flipping task, combining fingernail and fingerpad sensing improves end-to-end success by 15% over the best single-surface policy, showing their complementary roles in dexterous manipulation.</p>
+  </div>
+</section>
+
+<!-- ============ DESIGN ============ -->
+<section class="soft" id="design">
+  <div class="container">
+    <h2>Dual-Surface Fingertip Design</h2>
+    <p class="sub">A rigid nail on a compliant elastomer mount: loading displaces magnets under the nail relative to Hall-effect sensors fixed on the backbone.</p>
+    <div class="design">
+      <div>
+        <div class="card"><img src="static/images/fingertip_mechanism.png" alt="Isometric, top, and side views of the fingertip showing the fingernail, uSkin fingerpad, three sensing points A–C, magnets, and Hall-effect sensors"></div>
+        <p class="caption">Isometric view of nail + uSkin pad · top view with sensing points <b>A, B, C</b> · side view of magnets and Hall-effect sensors.</p>
+      </div>
+      <div class="card">
+        <table class="spec">
+          <tr><th colspan="2">Sensor Characteristics</th></tr>
+          <tr class="hl"><td>Fingernail sampling rate</td><td>275 Hz</td></tr>
+          <tr><td>Fingernail taxels</td><td>3 × 3-axis magnetic (9 ch)</td></tr>
+          <tr><td>Fingerpad taxels (uSkin)</td><td>30 × 3-axis magnetic (90 ch)</td></tr>
+          <tr><td>Tactile channels per fingertip</td><td>99</td></tr>
+          <tr><td>Fingernail shell</td><td>≈ 20 × 27 mm</td></tr>
+          <tr><td>Nail protrusion beyond pad</td><td>2 mm</td></tr>
+          <tr><td>Fingertip module</td><td>≈ 31.4 × 28.8 × 40.9 mm</td></tr>
+          <tr><td>Nail transduction</td><td>Rigid shell on elastomer mount · Hall-effect</td></tr>
+          <tr class="hl"><td>Force MAE (3 taxels)</td><td>0.082 N</td></tr>
+          <tr class="hl"><td>Localization MAE (3 taxels)</td><td>0.187 mm</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <h3>Effect of distributed nail sensing</h3>
+    <div class="two">
+      <div class="card">
+        <table class="res">
+          <thead><tr><th>Active taxels</th><th>Force MAE (N) ↓</th><th>Localization MAE (mm) ↓</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>0.130</td><td>0.627</td></tr>
+            <tr><td>2</td><td>0.093</td><td>0.345</td></tr>
+            <tr class="hl"><td>3 (ours)</td><td>0.082</td><td>0.187</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sub" style="margin:6px 0 0">Three distributed taxels cut localization error by <b>45.8%</b> vs. two taxels and <b>70.2%</b> vs. one, while fewer taxels retain useful force information.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARISON ============ -->
+<section id="comparison">
+  <div class="container wide">
+    <h2>Comparison with Dual-Surface Fingertips</h2>
+    <p class="sub">Sensing mechanism, structure, force estimation, and contact localization on each surface. Ours is the only design with contact localization on the fingernail.</p>
+    <div class="scroll">
+      <table class="cmp">
+        <thead>
+          <tr class="group">
+            <th rowspan="2">Reference</th>
+            <th colspan="5" class="pad">Fingerpad</th>
+            <th colspan="5" class="nail sep">Fingernail</th>
+            <th rowspan="2" class="sep">Behavior<br>Cloning</th>
+          </tr>
+          <tr>
+            <th>Sensorized</th><th>Mechanism</th><th>Structure</th><th>Force</th><th>Localization</th>
+            <th class="sep">Sensorized</th><th>Mechanism</th><th>Structure</th><th>Force</th><th>Localization</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Wuji Hand (v2)</td>
+            <td class="bad">✗</td><td class="na">–</td><td>Passive pad</td><td class="bad">✗</td><td class="bad">✗</td>
+            <td class="bad sep">✗</td><td class="na">–</td><td>Rigid nail</td><td class="bad">✗</td><td class="bad">✗</td>
+            <td class="na sep">–</td></tr>
+          <tr><td>DEXOP</td>
+            <td class="ok">✓</td><td>Vision-based</td><td>Elastomer</td><td class="warn">△</td><td class="warn">△</td>
+            <td class="bad sep">✗</td><td class="na">–</td><td>Rigid nail</td><td class="bad">✗</td><td class="bad">✗</td>
+            <td class="ok sep">✓</td></tr>
+          <tr><td>SHARPA Wave</td>
+            <td class="ok">✓</td><td>Vision-based</td><td>Elastomer</td><td class="ok">✓</td><td class="ok">✓</td>
+            <td class="bad sep">✗</td><td class="na">–</td><td>Rigid nail</td><td class="bad">✗</td><td class="bad">✗</td>
+            <td class="na sep">–</td></tr>
+          <tr><td>Murakami et al.</td>
+            <td class="ok">✓</td><td>Shared 6-axis F/T<small>global wrench</small></td><td>Soft skin</td><td class="ok">✓</td><td class="ok">✓</td>
+            <td class="ok sep">✓</td><td>Strain gauges<small>shared 6-axis F/T</small></td><td class="na">–</td><td class="ok">✓</td><td class="bad">✗</td>
+            <td class="bad sep">✗</td></tr>
+          <tr><td>Kõiva et al.</td>
+            <td class="ok">✓</td><td>Piezoresistive</td><td>12-taxel array<small>1-axis</small></td><td class="ok">✓</td><td class="ok">✓</td>
+            <td class="ok sep">✓</td><td>Hall-effect<small>barometric · accelerometer</small></td><td class="na">–</td><td class="ok">✓</td><td class="bad">✗</td>
+            <td class="bad sep">✗</td></tr>
+          <tr><td>DenseTact-Mini</td>
+            <td class="ok">✓</td><td>Vision-based</td><td>Elastomer</td><td class="warn">△</td><td class="warn">△</td>
+            <td class="ok sep">✓</td><td>Optical sensing<small>via gel</small></td><td>Pivoted rigid nail</td><td class="warn">△</td><td class="bad">✗</td>
+            <td class="bad sep">✗</td></tr>
+          <tr><td>Miyazaki et al.</td>
+            <td class="ok">✓</td><td>Vision-based</td><td>Elastomer</td><td class="ok">✓</td><td class="ok">✓</td>
+            <td class="ok sep">✓</td><td>Vision-based<small>marker tracking</small></td><td>Nail with markers</td><td class="ok">✓</td><td class="bad">✗</td>
+            <td class="bad sep">✗</td></tr>
+          <tr><td>Xu et al.</td>
+            <td class="ok">✓</td><td>Strain gauges<small>2D force</small></td><td>Soft skin<small>internal beam</small></td><td class="ok">✓</td><td class="bad">✗</td>
+            <td class="ok sep">✓</td><td>Contact microphone</td><td class="na">–</td><td class="bad">✗</td><td class="bad">✗</td>
+            <td class="bad sep">✗</td></tr>
+          <tr><td>PLATO</td>
+            <td class="ok">✓</td><td>Shared distal F/T<small>global wrench</small></td><td>Soft pulp</td><td class="ok">✓</td><td class="bad">✗</td>
+            <td class="ok sep">✓</td><td>Shared distal F/T</td><td>Rigid nail</td><td class="ok">✓</td><td class="bad">✗</td>
+            <td class="bad sep">✗</td></tr>
+          <tr><td>ARISTO Hand</td>
+            <td class="ok">✓</td><td>Capacitive</td><td>Soft 2×4 array<small>1-axis</small></td><td class="ok">✓</td><td class="ok">✓</td>
+            <td class="ok sep">✓</td><td>6-axis F/T</td><td>Rigid nail</td><td class="ok">✓</td><td class="bad">✗</td>
+            <td class="bad sep">✗</td></tr>
+          <tr class="ours"><td>Ours</td>
+            <td class="ok">✓</td><td>Magnetic (uSkin)</td><td>30 distributed taxels<small>3-axis</small></td><td class="ok">✓</td><td class="ok">✓</td>
+            <td class="ok sep">✓</td><td>Magnetic</td><td>3 distributed taxels<small>3-axis</small></td><td class="ok">✓</td><td class="ok">✓</td>
+            <td class="ok sep">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="legend">
+      <span><span class="ok">✓</span> supported</span>
+      <span><span class="warn">△</span> partial / needs additional calibration</span>
+      <span><span class="bad">✗</span> not supported in the considered configuration</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section class="soft" id="results">
+  <div class="container wide">
+    <h2>Results</h2>
+    <p class="sub">Behavior cloning (ACT) with a UR5e + Allegro Hand · 70 demos per task · 20 evaluation trials per task and policy (4 object positions × 5).</p>
+
+    <div class="stats">
+      <div class="stat"><div class="n"><span>48% →</span> 70%</div><div class="l">Average success across five tasks, adding fingernail tactile</div></div>
+      <div class="stat"><div class="n">≥ 3/5</div><div class="l">Successes at every task–position combination with nail tactile (vs. 0/5 worst-case without)</div></div>
+      <div class="stat"><div class="n">75%</div><div class="l">Card-flipping end-to-end with nail + pad, vs. 60% nail only · 45% pad only · 40% no tactile</div></div>
+      <div class="stat"><div class="n" style="font-size:1.6rem">0.082 N <span>/</span> 0.187 mm</div><div class="l">Fingernail force and contact-localization MAE</div></div>
+    </div>
+
+    <h3>Policy rollouts with fingernail tactile <span class="tag">success</span></h3>
+    <div class="grid g5">
+      <div class="vcard">
+        <video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/tissue_success.jpg"><source src="static/videos/tissue_success.mp4" type="video/mp4"></video>
+        <div class="meta"><div class="t">Tissue Lid Opening</div><div class="d">Hook the lid edge with the nail and lift.</div>
+          <div class="bars"><div class="bar"><span>w/o tactile</span><i style="--w:45%"></i><b>45%</b></div><div class="bar nail"><span>nail tactile</span><i style="--w:75%"></i><b>75%</b></div></div></div>
+      </div>
+      <div class="vcard">
+        <video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/binder_success.jpg"><source src="static/videos/binder_success.mp4" type="video/mp4"></video>
+        <div class="meta"><div class="t">Binder Picking</div><div class="d">Slide the nail into the gap and pull the binder off the shelf.</div>
+          <div class="bars"><div class="bar"><span>w/o tactile</span><i style="--w:60%"></i><b>60%</b></div><div class="bar nail"><span>nail tactile</span><i style="--w:70%"></i><b>70%</b></div></div></div>
+      </div>
+      <div class="vcard">
+        <video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/paper_success.jpg"><source src="static/videos/paper_success.mp4" type="video/mp4"></video>
+        <div class="meta"><div class="t">Paper Picking</div><div class="d">Acquire a single sheet from the table.</div>
+          <div class="bars"><div class="bar"><span>w/o tactile</span><i style="--w:55%"></i><b>55%</b></div><div class="bar nail"><span>nail tactile</span><i style="--w:65%"></i><b>65%</b></div></div></div>
+      </div>
+      <div class="vcard">
+        <video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/bento_success.jpg"><source src="static/videos/bento_success.mp4" type="video/mp4"></video>
+        <div class="meta"><div class="t">Bento Lid Opening</div><div class="d">Lift the lid open by its edge.</div>
+          <div class="bars"><div class="bar"><span>w/o tactile</span><i style="--w:40%"></i><b>40%</b></div><div class="bar nail"><span>nail tactile</span><i style="--w:80%"></i><b>80%</b></div></div></div>
+      </div>
+      <div class="vcard">
+        <video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/card_flip_success.jpg"><source src="static/videos/card_flip_success.mp4" type="video/mp4"></video>
+        <div class="meta"><div class="t">Card Flipping</div><div class="d">Clip the card edge, then flip and release.</div>
+          <div class="bars"><div class="bar"><span>w/o tactile</span><i style="--w:40%"></i><b>40%</b></div><div class="bar nail"><span>nail tactile</span><i style="--w:60%"></i><b>60%</b></div></div></div>
+      </div>
+    </div>
+
+    <h3>Robustness to object initialization</h3>
+    <div class="two">
+      <div class="card"><img src="static/images/initial_position_result.png" alt="Heatmap of success rates over four initial object positions for each task, without tactile and with fingernail tactile"></div>
+      <p class="sub" style="margin:6px 0 0">Objects placed at four positions on a 5&nbsp;cm square, five trials each. Without tactile, success swings from <b>5/5</b> to <b>0/5</b> across positions of the same task; with fingernail tactile every task–position pair reaches at least <b>3/5</b>.</p>
+    </div>
+
+    <h3>Continuous rollouts <span class="tag gray">uncut</span></h3>
+    <div class="grid g2">
+      <div class="vcard">
+        <video controls muted loop playsinline preload="none" poster="static/videos/posters/binder_continuous.jpg"><source src="static/videos/binder_continuous.mp4" type="video/mp4"></video>
+        <div class="meta"><div class="t">Binder Picking — consecutive trials</div><div class="d">Fingernail tactile policy, real-time.</div></div>
+      </div>
+      <div class="vcard">
+        <video controls muted loop playsinline preload="none" poster="static/videos/posters/paper_continuous.jpg"><source src="static/videos/paper_continuous.mp4" type="video/mp4"></video>
+        <div class="meta"><div class="t">Paper Picking — consecutive trials</div><div class="d">Fingernail tactile policy, real-time.</div></div>
+      </div>
+    </div>
+
+    <h3>Without tactile <span class="tag red">failure</span></h3>
+    <div class="grid g2">
+      <div class="vcard">
+        <video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/tissue_failure_no_tactile.jpg"><source src="static/videos/tissue_failure_no_tactile.mp4" type="video/mp4"></video>
+        <div class="meta"><div class="t">Tissue Lid Opening</div><div class="d">Vision + proprioception only: the nail misses the lid edge with the contact region occluded from the camera.</div></div>
+      </div>
+      <div class="vcard">
+        <video autoplay muted loop playsinline preload="metadata" poster="static/videos/posters/bento_failure_no_tactile.jpg"><source src="static/videos/bento_failure_no_tactile.mp4" type="video/mp4"></video>
+        <div class="meta"><div class="t">Bento Lid Opening</div><div class="d">Vision + proprioception only: no edge engagement is detected, so the lid is never lifted.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DUAL SURFACE ============ -->
+<section id="dual-surface">
+  <div class="container">
+    <h2>Nail + Pad Are Complementary</h2>
+    <p class="sub">Card flipping has two stages: <b>clip</b> the edge (nail-mediated), then <b>flip</b> while keeping contact (pad-mediated). Stage 2 is conditional on a successful clip.</p>
+    <div class="two">
+      <div class="card">
+        <table class="res">
+          <thead><tr><th>Stage</th><th>Nail + Pad</th><th>Nail only</th><th>Pad only</th><th>w/o Tactile</th></tr></thead>
+          <tbody>
+            <tr><td>1 · Clip</td><td class="best">16/20<small>80%</small></td><td>15/20<small>75%</small></td><td>10/20<small>50%</small></td><td class="na">–</td></tr>
+            <tr><td>2 · Flip | Clip</td><td class="best">15/16<small>94%</small></td><td>12/15<small>80%</small></td><td>9/10<small>90%</small></td><td class="na">–</td></tr>
+            <tr class="hl"><td>End-to-end</td><td class="best">15/20<small>75%</small></td><td>12/20<small>60%</small></td><td>9/20<small>45%</small></td><td>8/20<small>40%</small></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="card"><img src="static/images/card_pickup_failure.png" alt="Failure modes: without fingernail sensing the policy fails to acquire the card edge; without fingerpad sensing contact becomes unstable after pickup"></div>
+        <p class="caption"><b>Left:</b> without nail sensing, the edge is never acquired. <b>Right:</b> without pad sensing, contact is lost during the flip.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">Project page for an anonymous ICRA 2027 submission. Videos are real-time policy rollouts.</div>
+</footer>
+
+</body>
+</html>
