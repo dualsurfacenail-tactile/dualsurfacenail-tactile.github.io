@@ -273,8 +273,8 @@
     <h2>Continuous Rollouts</h2>
     <p class="sub">Uncut consecutive trials. <span class="tag">Autonomous · 3× speed</span></p>
     <div class="grid g2">
-      <div class="vcard"><video autoplay controls muted loop playsinline preload="metadata" poster="static/videos/posters/binder_continuous.jpg"><source src="static/videos/binder_continuous.mp4" type="video/mp4"></video><div class="t">Binder Picking</div></div>
-      <div class="vcard"><video autoplay controls muted loop playsinline preload="metadata" poster="static/videos/posters/paper_continuous.jpg"><source src="static/videos/paper_continuous.mp4" type="video/mp4"></video><div class="t">Paper Picking</div></div>
+      <div class="vcard"><video controls muted loop playsinline preload="metadata" poster="static/videos/posters/binder_continuous.jpg"><source src="static/videos/binder_continuous.mp4" type="video/mp4"></video><div class="t">Binder Picking</div></div>
+      <div class="vcard"><video controls muted loop playsinline preload="metadata" poster="static/videos/posters/paper_continuous.jpg"><source src="static/videos/paper_continuous.mp4" type="video/mp4"></video><div class="t">Paper Picking</div></div>
     </div>
   </div>
 </section>
@@ -309,6 +309,9 @@
   document.querySelector(".nav.next").addEventListener("click",()=>show(cur+1));
   dots.forEach((d,k)=>d.addEventListener("click",()=>show(k)));
   document.addEventListener("keydown",e=>{if(e.key==="ArrowRight")show(cur+1);if(e.key==="ArrowLeft")show(cur-1);});
+  // continuous rollouts start when scrolled into view, pause when out
+  const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?e.target.play().catch(()=>{}):e.target.pause()),{threshold:.4});
+  document.querySelectorAll("#continuous video").forEach(v=>io.observe(v));
 </script>
 </body>
 </html>
