@@ -209,7 +209,7 @@ kbd{background:#333;border-radius:3px;padding:0 5px;font-family:inherit}
     <span id="len" class="hint"></span>
   </div>
   <div class="row">
-    <button class="pri" id="rbtn" onclick="render(name)">Render this</button>
+    <button class="pri" id="rbtn" onclick="render(clip)">Render this</button>
     <button id="rall" onclick="renderAll()">Render all</button>
     <span class="hint">drag = new box · drag inside = move · corner = resize · <kbd>space</kbd> play · <kbd>I</kbd>/<kbd>O</kbd> in/out · <kbd>←</kbd>/<kbd>→</kbd> frame (<kbd>shift</kbd> = 1 s) · <kbd>⌫</kbd> delete box</span>
   </div>
@@ -218,7 +218,7 @@ kbd{background:#333;border-radius:3px;padding:0 5px;font-family:inherit}
 </main>
 <script>
 const $=id=>document.getElementById(id), v=$('v'), stage=$('stage');
-let cfg, name, S, W, H, DUR, mode='crop', sel=-1, drag=null, saveT;
+let cfg, clip, S, W, H, DUR, mode='crop', sel=-1, drag=null, saveT;
 
 fetch('/config').then(r=>r.json()).then(c=>{cfg=c;
   const names=Object.keys(c), hero=names.filter(n=>n.startsWith('hero_')), tasks=names.filter(n=>!n.startsWith('hero_'));
@@ -226,13 +226,13 @@ fetch('/config').then(r=>r.json()).then(c=>{cfg=c;
   pick(names[0]);});
 const btn=n=>`<button id="b_${n}" onclick="pick('${n}')">${n}<small>${cfg[n].src} · ${cfg[n].dur.toFixed(1)} s</small></button>`;
 
-function pick(n){ name=n; const it=cfg[n]; W=it.w; H=it.h; DUR=it.dur; S=it.settings; if(S.out==null) S.out=+DUR.toFixed(2);
+function pick(n){ clip=n; const it=cfg[n]; W=it.w; H=it.h; DUR=it.dur; S=it.settings; if(S.out==null) S.out=+DUR.toFixed(2);
   stage.style.aspectRatio=W+'/'+H; document.querySelectorAll('aside button').forEach(b=>b.classList.toggle('on',b.id==='b_'+n));
   $('scrub').max=DUR; v.src='/proxy/'+n; v.currentTime=S.in; sel=-1; $('result').style.display='none'; draw(); }
 
 function setMode(m){ mode=m; $('mcrop').classList.toggle('on',m==='crop'); $('mpix').classList.toggle('on',m==='pix'); $('mpix').classList.toggle('pix',m==='pix'); }
 function delSel(){ if(sel>=0){S.pix.splice(sel,1); sel=-1; changed();} }
-function changed(){ draw(); clearTimeout(saveT); saveT=setTimeout(()=>fetch('/save',{method:'POST',body:JSON.stringify({name,settings:S})}),300); }
+function changed(){ draw(); clearTimeout(saveT); saveT=setTimeout(()=>fetch('/save',{method:'POST',body:JSON.stringify({name:clip,settings:S})}),300); }
 
 const k=()=>stage.getBoundingClientRect().width/W;
 function draw(){
@@ -293,7 +293,7 @@ document.onkeydown=e=>{ if(e.target.tagName==='INPUT') return;
   else if(e.key==='Backspace'||e.key==='Delete') delSel(); };
 
 async function render(n){ $('rbtn').disabled=$('rall').disabled=true; $('log').textContent=`rendering ${n} …`;
-  const r=await fetch('/render',{method:'POST',body:JSON.stringify({name:n,settings:n===name?S:null})}).then(r=>r.json());
+  const r=await fetch('/render',{method:'POST',body:JSON.stringify({name:n,settings:n===clip?S:null})}).then(r=>r.json());
   $('log').textContent=r.log; $('rbtn').disabled=$('rall').disabled=false;
   if(r.ok){$('result').style.display='block'; $('result').src=`/out/${n}.mp4?${Date.now()}`;} return r.ok; }
 async function renderAll(){ for(const n of Object.keys(cfg)){ $('log').textContent=`rendering ${n} …`; if(!await render(n)) break; } }
